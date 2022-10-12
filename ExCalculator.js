@@ -55,6 +55,13 @@ let needEx = 0;
 
 let weekCount = 0;
 let weekCountEvent = 0;
+
+const nJEx = 150;
+const sJEx = 4000;
+
+let JamEa = 0;
+
+let price = 0;
 //////////////////////////////////////////////////////////////////////
 
 const handleLevelInput = document.querySelector("#CuruntLevel");
@@ -66,82 +73,46 @@ const btnHandle = document.querySelector("#btn");
 const h_weekCount = document.querySelector("#weekCount");
 const h_weekCountEvent = document.querySelector("#weekCountEvent");
 
+const h_nJEaCount = document.querySelector("#nJEaCount");
+const h_sJEaCount = document.querySelector("#sJEaCount");
+
 ///////////////////////////////////////////////////////////////////////
 
-/**비 이벤트시 필요 경험치와 걸리는 시간을 구한다.*/
+/**필요한 경험치를 구한다.*/
+function need_Ex() {
+    needEx = nidExTable[handleGLvInput.value - 1] - nidExTable[handleLevelInput.value - 1];
+    calculate_Lv();
+    calculate_Lv_Event();
+    calculate_NJ_Ea(price);
+    calculate_SJ_Ea(price);
+}
+
+/**비 이벤트시 필요 일수(주)를 구한다.*/
 function calculate_Lv(event) {
-    needEx = nidExTable[handleGLvInput.value - 1] - nidExTable[handleLevelInput.value - 1];
-    weekCount = Math.floor(needEx / weekMaxEx);
-    h_weekCount.innerHTML = "통상일 때는" + weekCount + "주 걸립니다~";
+    weekCount = Math.ceil(needEx / weekMaxEx);
+    h_weekCount.innerHTML = "통상일 때는 " + weekCount + "주 걸립니다~";
 }
 
-/**비 이벤트시 필요 경험치와 걸리는 시간을 구한다.*/
+/**이벤트시 필요 일수(주)를 구한다.*/
 function calculate_Lv_Event(event) {
-    needEx = nidExTable[handleGLvInput.value - 1] - nidExTable[handleLevelInput.value - 1];
-    weekCountEvent = Math.floor(needEx / WeekMaxExEevent);
-    h_weekCountEvent.innerHTML = "이벤트 기간 시에는" + weekCountEvent + "주 걸립니다~";
+    weekCountEvent = Math.ceil(needEx / WeekMaxExEevent);
+    h_weekCountEvent.innerHTML = "이벤트 기간 시에는 " + weekCountEvent + "주 걸립니다~";
 }
-btnHandle.addEventListener("click", calculate_Lv);
-btnHandle.addEventListener("click", calculate_Lv_Event);
 
+/**일반 보석을 먹였을 시에 걸리는 갯수 */
+function calculate_NJ_Ea(price) {
+    JamEa = Math.ceil(needEx / nJEx);
+    //일반 보석 가격
 
-// function makeAccumExtable() {
-//     AccumExTable.push(0);
-//     AccumExTable.push(exTable[0]);
+    h_nJEaCount.innerHTML = "일반 보석 총 " + JamEa + " 개가 필요합니다~";
+}
 
-//     let temp = exTable[0];
-//     for (let i = 2; i < exTable.length; ++i) {
+/**특별 보석을 먹였을 시에 걸리는 갯수 */
+function calculate_SJ_Ea(price) {
+    JamEa = Math.ceil(needEx / sJEx);
 
-//         temp += exTable[i - 1]
+    h_sJEaCount.innerHTML = "특별 보석 총 " + JamEa + " 개가 필요합니다~";
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//         AccumExTable.push(temp);
-//     }
-// }
-
-//console.log(AccumExTable);
-
-// function fillAccumExTable(num) {
-//     let ex = 0;
-//     for (let i = 0; i < (num + 1); ++i) {
-//         ex += exTable[i];
-//         AccumExTable[i - 1] = ex;
-//     }
-// }
-
-// function getCurrentLevel(event) {
-//     event.preventDefault();
-//     currentLv = currentLvInput.value;
-//     console.log(currentLv);
-// }
-
-// function getGoalLevent(event) {
-//     event.preventDefault();
-//     GoalLv = GoalLvInput.value;
-// }
-
-// function calculateLv(event) {
-//     event.preventDefault();
-
-//     let abGoalEx = AccumExTable[currentLv];
-//     let abCurrentEx = AccumExTable[GoalLv];
-
-//     reqEx = abGoalEx - abCurrentEx;
-//     console.log(reqEx);
-// }
-
-// currentLvbtn.addEventListener("onclick", getCurrentLevel);
-// GoalLvbtn.addEventListener("onclick", getGoalLevent);
-// btnHandle.addEventListener("onclick", calculateLv);
-
-// function paintInput(event) {
-//     event.preventDefault();
-//     //console.log(currentLv.value);
-// }
-
-// // document.addEventListener("submit", paintInput);
-
-// // for (var i = 0; i < exTable.length; ++i) {
-// //     sum += exTable[i];
-// // }
-
-// // console.log(sum);
+btnHandle.addEventListener("click", need_Ex);
