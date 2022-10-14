@@ -37,6 +37,8 @@ const h_sJEaCount = document.querySelector("#sJEaCount");
 
 const h_nJPrice = document.querySelector("#nJPrice");
 const h_sJPrice = document.querySelector("#sJPrice");
+const h_nJPriceCount = document.querySelector("#nJPriceCount");
+const h_sJPriceCount = document.querySelector("#sJPriceCount");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,12 +50,16 @@ let needEx = 0;
 
 let weekCount = 0;
 
-/**보석 갯수 */
-let JamEa = 0;
+/**일반 보석 갯수 */
+let nJamEa = 0;
+
+/**특별 보석 갯수 */
+let sJamEa = 0;
 
 /**보석의 가격 */
-let nJPrice = h_nJPrice.value;
-let sJPrice = h_sJPrice.value;
+//let nJPrice = h_nJPrice.value;
+//let sJPrice = h_sJPrice.value;
+let price = 0;
 //////////////////////////////////////////////////////////////////////
 
 
@@ -65,6 +71,8 @@ function need_Ex(event) {
         calculate_Lv(true);
         calculate_Ea();
         calculate_Ea(true);
+        calculate_Price();
+        calculate_Price(true);
     } else if (h_goalLevel.value = h_curuntLevel.value) {
         alert("현재 레벨과 목표 레벨이 같아요!")
     } else {
@@ -73,8 +81,8 @@ function need_Ex(event) {
 }
 
 /**필요 일수(주)를 구한다.*/
-function calculate_Lv(dEvent = false) {
-    if (dEvent == false) {
+function calculate_Lv(isEvent = false) {
+    if (isEvent == false) {
         weekCount = Math.ceil(needEx / weekMaxEx);
         h_weekCount.innerHTML = "통상일 때는 " + weekCount + "주 걸립니다~";
     } else {
@@ -84,13 +92,24 @@ function calculate_Lv(dEvent = false) {
 }
 
 /**보석을 먹였을 시에 걸리는 갯수를 구한다. */
-function calculate_Ea(dEvent = false) {
-    if (dEvent == false) {
-        JamEa = Math.ceil(needEx / 150);
-        h_nJEaCount.innerHTML = "일반 보석 총 " + JamEa + " 개가 필요합니다~";
+function calculate_Ea(isEvent = false) {
+    if (isEvent == false) {
+        nJamEa = Math.ceil(needEx / 150);
+        h_nJEaCount.innerHTML = "일반 보석 총 " + nJamEa + " 개가 필요합니다~";
     } else {
-        JamEa = Math.ceil(needEx / 4000);
-        h_sJEaCount.innerHTML = "특별 보석 총 " + JamEa + " 개가 필요합니다~";
+        sJamEa = Math.ceil(needEx / 4000);
+        h_sJEaCount.innerHTML = "특별 보석 총 " + sJamEa + " 개가 필요합니다~";
+    }
+}
+
+/**보석을 먹였을 시에 총 금액을 계산한다. */
+function calculate_Price(isSpecial = false) {
+    if (isSpecial == false) {
+        price = nJamEa * h_nJPrice.value;
+        h_nJPriceCount.innerHTML = "일반 보석 사용시 총 " + price + " 골드가 필요합니다."
+    } else {
+        price = sJamEa * h_sJPrice.value;
+        h_sJPriceCount.innerHTML = "특별 보석 사용시 총 " + price + " 골드가 필요합니다."
     }
 }
 
