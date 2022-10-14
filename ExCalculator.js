@@ -1,28 +1,3 @@
-//마비노기 신 정령 필요 경험치 테이블
-// const exTable = [
-//     // level 1~10
-//     300, 415, 577, 784, 1038, 1338, 1684, 2077, 2515, 3000,
-//     // level 11~20
-//     3531, 4108, 4732, 5401, 6117, 6879, 7687, 8542, 9443, 10389,
-//     // level 21~30
-//     11383, 12422, 13507, 14639, 15817, 17041, 18311, 19628, 20991, 22400,
-//     // level 31~40
-//     23400, 24500, 25500, 26600, 27800, 28900, 30100, 31300, 32500, 33800,
-//     // level 41~50
-//     35000, 36300, 37600, 39000, 40300, 41700, 43200, 44660, 46100, 47500,
-//     // level 51~60
-//     49100, 50600, 52200, 53700, 55300, 57000, 58600, 60300, 62000, 63800,
-//     // level 61~70
-//     65500, 67300, 69100, 70900, 72800, 74600, 76500, 78500, 80400, 82400,
-//     // level 71~80
-//     84400, 86400, 88400, 90500, 92600, 94700, 96800, 99000, 101200, 103400,
-//     // level 81~90
-//     105600, 107900, 110200, 112500, 114800, 117200, 119600, 122000, 124400, 126800,
-//     // level 91~99
-//     129300, 131800, 134300, 136900, 139500, 142100, 144700, 147300, 150000,
-// ]
-
-
 //마비노기 신 정령 경험치 누적 필요 경험치 테이블
 let nidExTable = [
     //level 1~10
@@ -62,13 +37,14 @@ const sJEx = 4000;
 let JamEa = 0;
 
 let price = 0;
+
 //////////////////////////////////////////////////////////////////////
 
-const handleLevelInput = document.querySelector("#CuruntLevel");
+const h_leLevelInput = document.querySelector("#CuruntLevel");
 
-const handleGLvInput = document.querySelector("#goalLevel");
+const h_GLvInput = document.querySelector("#goalLevel");
 
-const btnHandle = document.querySelector("#btn");
+const h_btn = document.querySelector("#btn");
 
 const h_weekCount = document.querySelector("#weekCount");
 const h_weekCountEvent = document.querySelector("#weekCountEvent");
@@ -80,11 +56,15 @@ const h_sJEaCount = document.querySelector("#sJEaCount");
 
 /**필요한 경험치를 구한다.*/
 function need_Ex() {
-    needEx = nidExTable[handleGLvInput.value - 1] - nidExTable[handleLevelInput.value - 1];
-    calculate_Lv();
-    calculate_Lv_Event();
-    calculate_NJ_Ea(price);
-    calculate_SJ_Ea(price);
+    if (h_GLvInput.value > h_leLevelInput.value) {
+        needEx = nidExTable[h_GLvInput.value - 1] - nidExTable[h_leLevelInput.value - 1];
+        calculate_Lv();
+        calculate_Lv_Event();
+        calculate_NJ_Ea(price);
+        calculate_SJ_Ea(price);
+    } else(
+        alert("현재 레벨 보다 목표 레벨이 낮아요!")
+    )
 }
 
 /**비 이벤트시 필요 일수(주)를 구한다.*/
@@ -102,17 +82,16 @@ function calculate_Lv_Event(event) {
 /**일반 보석을 먹였을 시에 걸리는 갯수 */
 function calculate_NJ_Ea(price) {
     JamEa = Math.ceil(needEx / nJEx);
-    //일반 보석 가격
-
     h_nJEaCount.innerHTML = "일반 보석 총 " + JamEa + " 개가 필요합니다~";
 }
 
 /**특별 보석을 먹였을 시에 걸리는 갯수 */
 function calculate_SJ_Ea(price) {
     JamEa = Math.ceil(needEx / sJEx);
-
     h_sJEaCount.innerHTML = "특별 보석 총 " + JamEa + " 개가 필요합니다~";
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-btnHandle.addEventListener("click", need_Ex);
+
+
+h_btn.addEventListener("click", need_Ex);
