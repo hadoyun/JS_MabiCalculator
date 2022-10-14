@@ -22,27 +22,10 @@ let nidExTable = [
     4341456, 4470756, 4602556, 4736856, 4873756, 5013256, 5155356, 5300056, 5447356, 5597356
 ];
 
-//일주일에 얻을 수 있는 최대 경험치
-const weekMaxEx = 400000;
-const WeekMaxExEevent = 800000;
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-let needEx = 0;
-
-let weekCount = 0;
-let weekCountEvent = 0;
-
-const nJEx = 150;
-const sJEx = 4000;
-
-let JamEa = 0;
-
-let price = 0;
-
-//////////////////////////////////////////////////////////////////////
-
-const h_leLevelInput = document.querySelector("#CuruntLevel");
-
-const h_GLvInput = document.querySelector("#goalLevel");
+const h_curuntLevel = document.querySelector("#CuruntLevel");
+const h_goalLevel = document.querySelector("#goalLevel");
 
 const h_btn = document.querySelector("#btn");
 
@@ -52,46 +35,65 @@ const h_weekCountEvent = document.querySelector("#weekCountEvent");
 const h_nJEaCount = document.querySelector("#nJEaCount");
 const h_sJEaCount = document.querySelector("#sJEaCount");
 
-///////////////////////////////////////////////////////////////////////
+const h_nJPrice = document.querySelector("#nJPrice");
+const h_sJPrice = document.querySelector("#sJPrice");
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//일주일에 얻을 수 있는 최대 경험치
+const weekMaxEx = 400000;
+const WeekMaxExEevent = 800000;
+
+let needEx = 0;
+
+let weekCount = 0;
+
+/**보석 갯수 */
+let JamEa = 0;
+
+/**보석의 가격 */
+let nJPrice = h_nJPrice.value;
+let sJPrice = h_sJPrice.value;
+//////////////////////////////////////////////////////////////////////
+
 
 /**필요한 경험치를 구한다.*/
-function need_Ex() {
-    if (h_GLvInput.value > h_leLevelInput.value) {
-        needEx = nidExTable[h_GLvInput.value - 1] - nidExTable[h_leLevelInput.value - 1];
+function need_Ex(event) {
+    if (h_goalLevel.value > h_curuntLevel.value) {
+        needEx = nidExTable[h_goalLevel.value - 1] - nidExTable[h_curuntLevel.value - 1];
         calculate_Lv();
-        calculate_Lv_Event();
-        calculate_NJ_Ea(price);
-        calculate_SJ_Ea(price);
-    } else(
+        calculate_Lv(true);
+        calculate_Ea();
+        calculate_Ea(true);
+    } else if (h_goalLevel.value = h_curuntLevel.value) {
+        alert("현재 레벨과 목표 레벨이 같아요!")
+    } else {
         alert("현재 레벨 보다 목표 레벨이 낮아요!")
-    )
+    }
 }
 
-/**비 이벤트시 필요 일수(주)를 구한다.*/
-function calculate_Lv(event) {
-    weekCount = Math.ceil(needEx / weekMaxEx);
-    h_weekCount.innerHTML = "통상일 때는 " + weekCount + "주 걸립니다~";
+/**필요 일수(주)를 구한다.*/
+function calculate_Lv(dEvent = false) {
+    if (dEvent == false) {
+        weekCount = Math.ceil(needEx / weekMaxEx);
+        h_weekCount.innerHTML = "통상일 때는 " + weekCount + "주 걸립니다~";
+    } else {
+        weekCount = Math.ceil(needEx / WeekMaxExEevent);
+        h_weekCountEvent.innerHTML = "이벤트 기간 시에는 " + weekCount + "주 걸립니다~";
+    }
 }
 
-/**이벤트시 필요 일수(주)를 구한다.*/
-function calculate_Lv_Event(event) {
-    weekCountEvent = Math.ceil(needEx / WeekMaxExEevent);
-    h_weekCountEvent.innerHTML = "이벤트 기간 시에는 " + weekCountEvent + "주 걸립니다~";
+/**보석을 먹였을 시에 걸리는 갯수를 구한다. */
+function calculate_Ea(dEvent = false) {
+    if (dEvent == false) {
+        JamEa = Math.ceil(needEx / 150);
+        h_nJEaCount.innerHTML = "일반 보석 총 " + JamEa + " 개가 필요합니다~";
+    } else {
+        JamEa = Math.ceil(needEx / 4000);
+        h_sJEaCount.innerHTML = "특별 보석 총 " + JamEa + " 개가 필요합니다~";
+    }
 }
 
-/**일반 보석을 먹였을 시에 걸리는 갯수 */
-function calculate_NJ_Ea(price) {
-    JamEa = Math.ceil(needEx / nJEx);
-    h_nJEaCount.innerHTML = "일반 보석 총 " + JamEa + " 개가 필요합니다~";
-}
-
-/**특별 보석을 먹였을 시에 걸리는 갯수 */
-function calculate_SJ_Ea(price) {
-    JamEa = Math.ceil(needEx / sJEx);
-    h_sJEaCount.innerHTML = "특별 보석 총 " + JamEa + " 개가 필요합니다~";
-}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 h_btn.addEventListener("click", need_Ex);

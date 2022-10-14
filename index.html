@@ -9,15 +9,20 @@
 </head>
 
 <body>
-    <h1 id="head">마비노기 정령 필요 레벨 계산기</h1>
+    <h1 id="head">마비노기 정령 레벨 계산기</h1>
 
-    현재 레벨 입력
-    <form id="CuruntLevelForm">
+
+    <form id="CuruntLevelForm">현재 레벨 입력
         <input type="number" id="CuruntLevel" max="100" min="1" value="1">
     </form>
-    목표 레벨 입력
-    <form id="goalLevelForm">
-        <input type="number" id="goalLevel" max="100" min="1" value="1">
+
+    <form id="goalLevelForm">목표 레벨 입력
+        <input type="number" id="goalLevel" max="100" min="1" value="63">
+    </form>
+    <form>
+        일반 보석 가격
+        <input id="nJPrice" value="15000"> 특별 보석 가격
+        <input id="sJPrice" value="200000">
     </form>
 
     <button id="btn">계산하기</button>
