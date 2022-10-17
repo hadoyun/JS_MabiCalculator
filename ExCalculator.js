@@ -32,14 +32,15 @@ const h_btn = document.querySelector("#btn");
 const h_weekCount = document.querySelector("#weekCount");
 const h_weekCountEvent = document.querySelector("#weekCountEvent");
 
+///result divs
 const h_nJEaCount = document.querySelector("#nJEaCount");
 const h_sJEaCount = document.querySelector("#sJEaCount");
-
 const h_nJPrice = document.querySelector("#nJPrice");
 const h_sJPrice = document.querySelector("#sJPrice");
 const h_nJPriceCount = document.querySelector("#nJPriceCount");
 const h_sJPriceCount = document.querySelector("#sJPriceCount");
 
+const h_resultDiv = document.querySelector("#resultDiv");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //일주일에 얻을 수 있는 최대 경험치
@@ -60,7 +61,15 @@ let sJamEa = 0;
 //let nJPrice = h_nJPrice.value;
 //let sJPrice = h_sJPrice.value;
 let price = 0;
+
+let rHandles = [];
+
+const ALTERTEXT1 = "현재 레벨과 목표 레벨이 같아요!";
+const ALTERTEXT2 = "현재 레벨 보다 목표 레벨이 낮아요!";
+const HIDDEN = "hidden";
 //////////////////////////////////////////////////////////////////////
+
+
 
 
 /**필요한 경험치를 구한다.*/
@@ -73,10 +82,11 @@ function need_Ex(event) {
         calculate_Ea(true);
         calculate_Price();
         calculate_Price(true);
+        h_resultDiv.classList.remove(HIDDEN);
     } else if (h_goalLevel.value = h_curuntLevel.value) {
-        alert("현재 레벨과 목표 레벨이 같아요!")
+        alert(ALTERTEXT1)
     } else {
-        alert("현재 레벨 보다 목표 레벨이 낮아요!")
+        alert(ALTERTEXT2)
     }
 }
 
@@ -84,6 +94,7 @@ function need_Ex(event) {
 function calculate_Lv(isEvent = false) {
     if (isEvent == false) {
         weekCount = Math.ceil(needEx / weekMaxEx);
+
         h_weekCount.innerHTML = "통상일 때는 " + weekCount + "주 걸립니다~";
     } else {
         weekCount = Math.ceil(needEx / WeekMaxExEevent);
@@ -115,4 +126,5 @@ function calculate_Price(isSpecial = false) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+h_resultDiv.classList.add(HIDDEN);
 h_btn.addEventListener("click", need_Ex);
