@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>마비노기 정령 레벨 계산기!</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 </head>
 
 <body>
     <h1 id="head">마비노기 정령 레벨 계산기</h1>
-
 
     <form id="CuruntLevelForm">현재 레벨 입력
         <input type="number" id="CuruntLevel" max="100" min="1" value="1">
@@ -28,9 +27,9 @@
         <input id="sJPrice" value="200000">
     </form>
 
-    <button class="btn-gradient cyan mini" id="btn">계산하기</button>
+    <button class="btn" id="btn">계산하기</button>
 
-    <div id="resultDiv">
+    <div id="resultDiv" class="resultDiv hidden">
         <div id="weekCount"></div>
         <div id="weekCountEvent"></div>
         <div id="nJEaCount"></div>

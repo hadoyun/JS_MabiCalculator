@@ -67,6 +67,9 @@ let rHandles = [];
 const ALTERTEXT1 = "현재 레벨과 목표 레벨이 같아요!";
 const ALTERTEXT2 = "현재 레벨 보다 목표 레벨이 낮아요!";
 const HIDDEN = "hidden";
+
+let btnCount = 0;
+const btnColor = ["btn-red", "btn-blue", "btn-green"];
 //////////////////////////////////////////////////////////////////////
 
 
